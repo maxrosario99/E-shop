@@ -1,0 +1,13 @@
+#header {
+    grid-column: 1/3;
+    grid-row: 1/2;
+    display: flex;
+    list-style-type: none;
+    margin: 0;
+    background-color: grey;
+}
+
+li a {
+    text-decoration: none;
+    color: black;
+}
