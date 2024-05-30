@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { LoginUser } from "./api/user";
-import { useAuth } from "../components/AuthContext"; // Update path accordingly
+import { useAuth } from "../components/AuthContext";
 
 const Login = () => {
   const [usernameInput, setUsernameInput] = useState("");

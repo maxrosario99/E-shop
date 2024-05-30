@@ -10,8 +10,12 @@ export const AuthProvider = ({ children }) => {
     console.log("AuthProvider isLoggedIn:", isLoggedIn);
     console.log("AuthProvider username:", username);
   }, [isLoggedIn, username]);
+
+  const toggleLogin = () => {
+    setIsLoggedIn(prevState => !prevState);
+  };
   return (
-    <AuthContext.Provider value={{ isLoggedIn, setIsLoggedIn, username, setUsername }}>
+    <AuthContext.Provider value={{ isLoggedIn, setIsLoggedIn, username, setUsername, toggleLogin}}>
       {children}
     </AuthContext.Provider>
   );

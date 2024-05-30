@@ -1,5 +1,6 @@
 import userRoutes from "./routes/user.js"
 import mongoose from  "mongoose" 
+import productsRouter from '../server/controllers/products.js';
 
 import cors from "cors"
 import express  from "express"
@@ -26,9 +27,9 @@ app.get("/hello", async (req, res) => {
     console.log("hello")
     res.send("hello")
 })
+// app.use("/products", productRoutes)
 
-
-
+app.use('/api', productsRouter);
 
 
 const port= 3001;
