@@ -1,22 +1,8 @@
-import express from 'express';
-import mongoose from 'mongoose';
 import Products from '../models/products.js';
+import mongodb from "mongodb"
+var ObjectID = mongodb.ObjectId;
 
-const router = express.Router();
-
-mongoose.connect('mongodb+srv://maxumum1000:Snowball123!@cluster0.53qjg8g.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
-  .then(() => {
-    console.log("MongoDB connected.");
-    initializeProducts();
-  })
-  .catch(err => {
-    console.error("MongoDB connection error:", err);
-  });
-
-const initializeProducts = async () => {
+export const initializeProducts = async () => {
     const hardcodedProducts = [
         {
             name: "Macbook 2012 ",
@@ -50,13 +36,26 @@ const initializeProducts = async () => {
     }
 };
 
-router.get('/products', async (req, res) => {
+export const GetProducts = async (req, res) => {
   try {
     const products = await Products.find({}, 'name price');
+    console.log(products)
     res.json(products);
   } catch (error) {
     res.status(500).json({ error: 'Internal Server Error' });
   }
-});
+}
 
-export default router;
+export const UpdateProductName = async (req, res) => {
+  try {
+    const updateProduct = req.body; // {_id :1 , name: "my new name"}
+    console.log(updateProduct)
+    let updatedProduct = await Products.findOneAndUpdate({ _id: updateProduct._id }, { name: updateProduct.name }, { new: true });
+    console.log(updatedProduct);
+    res.json(updatedProduct);
+  } catch (error) {
+    console.log(error)
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+}
+

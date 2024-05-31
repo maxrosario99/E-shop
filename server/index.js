@@ -1,12 +1,11 @@
 import userRoutes from "./routes/user.js"
+import productsRoutes from "./routes/product.js"
 import mongoose from  "mongoose" 
-import productsRouter from '../server/controllers/products.js';
-
+import { initializeProducts } from '../server/controllers/products.js';
 import cors from "cors"
-import express  from "express"
+import express from "express"
 
 
-import bcrypt  from"bcrypt"
 const app = express()
 
 app.use(express.json());
@@ -22,14 +21,7 @@ app.use(cors({
 }))
 
 app.use("/user", userRoutes)
-
-app.get("/hello", async (req, res) => {
-    console.log("hello")
-    res.send("hello")
-})
-// app.use("/products", productRoutes)
-
-app.use('/api', productsRouter);
+app.use('/products', productsRoutes);
 
 
 const port= 3001;
@@ -37,6 +29,7 @@ const port= 3001;
 const connect = mongoose.connect("mongodb+srv://maxumum1000:Snowball123!@cluster0.53qjg8g.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0");
 
 connect.then(() => {
+    initializeProducts()
     app.listen(port, () => (
         console.log(`Server running on Port: ${port}`)
     ))})

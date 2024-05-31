@@ -1,11 +1,8 @@
-const express = require('express');
-const productsRouter = require('./path/to/products');
+import express from "express"
+import { GetProducts, UpdateProductName } from "../controllers/products.js";
+const router = express.Router();
 
-const app = express();
-const port = 5000;
+router.get('/getProducts', GetProducts)
+router.post('/updateProductName', UpdateProductName)
 
-app.use('/api', productsRouter);
-
-app.listen(port, () => {
-  console.log(`Server running on http://localhost:${port}`);
-});
+export default router

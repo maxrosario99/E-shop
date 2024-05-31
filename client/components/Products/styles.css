@@ -1,0 +1,11 @@
+#update-product-form-container {
+    background-color: antiquewhite;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+    width: 80%;
+    height: 80%;
+    display: none;
+}
