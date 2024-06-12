@@ -1,59 +1,62 @@
-import React, { MouseEventHandler, useState } from 'react'
-import { Product } from '../../pages/Products'
-import { UpdateProductName } from '../../pages/api/products'
+import { UpdateProduct } from "@/models/products";
+import React, { FormEvent } from "react";
+import { UpdateItem } from "../../pages/api/products";
 
-type props = {
-  closeModal: any//MouseEventHandler<HTMLButtonElement>,
-  product: Product | undefined
-  setProducts: any;
-  products: any
-}
+type Props = {
+  product: UpdateProduct;
 
+  setProduct: any;
+};
 
-
-const UpdateProductForm = ({ closeModal, product, products, setProducts } : props) => {
-  const [newName, setNewName] = useState<string>("")
-
-  const handleUpdateProduct = async (e: any) => {
-    e.preventDefault()
-    if (newName === "") return
-    const updateProduct = {
-      _id: product?._id,
-      name: newName
-    }
-    const response = await UpdateProductName(updateProduct);
-    console.log(response);
-
-    if (response.data !== null) {
-      const copyProducts = [...products];
-
-      const index = copyProducts.findIndex((curr) => curr._id === response.data?._id);
-
-      copyProducts[index] = response.data;
-
-      setProducts(copyProducts);
-      setNewName("");
-      closeModal();
+const UpdateProductForm = ({ product, setProduct }: Props) => {
+  function closeUpdateForm() {
+    const updateFormElement = document.getElementById("update-product-form");
+    if (updateFormElement !== null) {
+      updateFormElement.style.display = "none";
     }
   }
-  
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const response = await UpdateItem(product);
+    console.log(response);
+    closeUpdateForm();
+  };
   return (
-    <div id='update-product-form-container'>
-      <button onClick={closeModal}>Close</button>
-      <form>
-        <label>Id:</label>
-        <p>{product?._id}</p>
-        <br/>
-        <label>Price:</label>
-        <p>$ {product?.price}</p>
-        <br/>
-        <label>Name</label>
-        <input onChange={(e) => setNewName(e.target.value)} placeholder={product?.name} />
-        <br/>
-        <button onClick={(e) => handleUpdateProduct(e)}>save</button>
+    <div id="update-product-form">
+      <button onClick={closeUpdateForm}>Close</button>
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label>Name</label>
+          <input
+            onChange={(e) => setProduct({ ...product, name: e.target.value })}
+            placeholder={product.name}
+            type="text"
+            name="name"
+          />
+        </div>
+        <div>
+          <label>id</label>
+          <input
+            onChange={(e) => setProduct({ ...product, id: e.target.value })}
+            placeholder={product.id.toString()}
+            type="number"
+            name="id"
+          />
+        </div>
+        <div>
+          <label>Price</label>
+          <input
+            onChange={(e) => setProduct({ ...product, price: e.target.value })}
+            placeholder={product.price.toString()}
+            type="number"
+            name="price"
+          />
+        </div>
+        <button>Submit</button>
       </form>
     </div>
-  )
-}
+  );
+};
 
-export default UpdateProductForm
+export default UpdateProductForm;

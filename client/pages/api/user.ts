@@ -1,8 +1,12 @@
 import axios from "axios";
 
-export const LoginUser = (userInfo: any) => axios.post("http://localhost:3001/user/login", userInfo)
-export const signupUser = (userInfo: any) => axios.post("http://localhost:3001/user/signup", userInfo)
+const UsersURL = "http://localhost:3001/user"
 
-export const HelloTest = () => axios.get<any>("http://localhost:3001/hello")
+export const LoginUser = (userInfo: any) => axios.post( UsersURL +"/login", userInfo)
+export const signupUser = (userInfo: any) => axios.post(UsersURL + "/signup", userInfo)
+
+export const displayUser = () => axios.get(UsersURL +"/users")
+
+export const deleteUser = (user: any) => axios.post(UsersURL + "/deleteUser", user)
 
 // http://localhost:3001/hello
