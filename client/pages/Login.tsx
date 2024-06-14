@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { LoginUser } from "./api/user";
+import { LoginUser, checkSession } from "./api/user";
 import { useAuth } from "../components/AuthContext";
 
 const Login = () => {
@@ -22,7 +22,10 @@ const Login = () => {
       setError("Failed to log in. Please check your username and password.");
     }
   };
-
+  const handleCheckSession = async () => {
+    const response = await checkSession();
+    console.log(response);
+  };
   useEffect(() => {
     console.log("Login component mounted");
   }, []);
@@ -63,6 +66,7 @@ const Login = () => {
           Don't have an account? <a href="/signup">Sign up</a>
         </p>
       </form>
+      <button onClick={handleCheckSession}>CheckSession</button>
     </div>
   );
 };

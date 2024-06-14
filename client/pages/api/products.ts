@@ -1,6 +1,6 @@
 import { NewProduct, Product, UpdateProduct } from "@/models/products";
 import axios from "axios";
-
+import "./axiosIntercepter"
 const productsUrl = "http://localhost:3001/products"
 
 export const UpdateProductName = (updateProductInfo: any) => axios.post(productsUrl + "/updateProductName", updateProductInfo)

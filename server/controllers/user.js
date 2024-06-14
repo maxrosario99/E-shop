@@ -2,25 +2,25 @@ import Users from "../models/users.js";
 import bcrypt from "bcrypt";
 
 export const LoginUser = async (req, res) => {
-  console.log(req.body);
+  console.log("logging in");
   try {
     const check = await Users.findOne({ name: req.body.username });
     console.log("check:", check);
     if (check === null) {
-      res.send("the user is not found");
-      return;
+      return res.status(404).json({ error: "user not found" });
     }
     const isPasswordMatch = await bcrypt.compare(
       req.body.password,
       check.password
     );
     if (isPasswordMatch) {
-      return true;
+      req.session.userId = check.id;
+      res.send(req.session.userId);
     } else {
-      return res.send("wrong password");
+      return res.status(404).json({ error: "password wrong" });
     }
   } catch {
-    return res.send("wrong details");
+    return res.status(500).json({ error: "server error" });
   }
 };
 
@@ -32,7 +32,7 @@ export const signupUser = async (req, res) => {
   const existingUser = await Users.findOne({ name: data.name });
 
   if (existingUser) {
-    res.send("User already exists. Please choose a different username");
+    res.status(400).json({ error: "user already exists" });
     return;
   } else {
     const saltRounds = 10;
@@ -41,9 +41,16 @@ export const signupUser = async (req, res) => {
 
     const userdata = await Users.insertMany(data);
     console.log(userdata);
+    res.send("ok");
   }
 };
-
+export const checkSession = async (req, res) => {
+  console.log("checking session");
+  try {
+    console.log(req.session);
+    res.send("ok");
+  } catch {}
+};
 export const displayUsers = async (req, res) => {
   try {
     const users = await Users.find({}, "name _id");

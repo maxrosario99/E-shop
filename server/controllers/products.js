@@ -26,12 +26,12 @@ export const initializeProducts = async () => {
     if (!existingProduct) {
       const product = new Products(productData);
       await product.save();
-      console.log(`Product ${productData.id} initialized.`);
+      // console.log(`Product ${productData.id} initialized.`);
     } else {
       existingProduct.name = productData.name;
       existingProduct.price = productData.price;
       await existingProduct.save();
-      console.log(`Product ${productData.id} updated.`);
+      // console.log(`Product ${productData.id} updated.`);
     }
   }
 };
@@ -39,7 +39,7 @@ export const initializeProducts = async () => {
 export const GetProducts = async (req, res) => {
   try {
     const products = await Products.find({});
-    console.log(products);
+    // console.log(products);
     res.json(products);
   } catch (error) {
     res.status(500).json({ error: "Internal Server Error" });
