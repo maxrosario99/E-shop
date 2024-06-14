@@ -33,3 +33,12 @@
     height: 50%;
     display: none;
 }
+
+.product-card {
+    display: flex;
+  flex-direction: column;
+  margin: 7px;
+  border: 1.2px solid #dbdada;
+  border-radius: 4px;
+  background-color: #ffffff;
+}

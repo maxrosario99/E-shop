@@ -22,5 +22,5 @@ export function useGetProducts () {
         fetchProducts()
     
 }, [])
-return(products)
+return [products, setProducts]
 }

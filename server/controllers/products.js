@@ -76,3 +76,18 @@ export const AddNewProduct = async (req, res) => {
     res.status(500).json({ error: "internal Server Error" });
   }
 };
+
+export const deleteProduct = async (req, res) => {
+  try {
+    console.log("function hit");
+
+    const deletedProduct = req.body;
+    console.log(`Deleting product with id: ${deleteProduct}`);
+    await Products.deleteOne({ _id: deletedProduct._id });
+    console.log(`Product ${deleteProduct} deleted.`);
+    res.status(200).json({ message: "Product deleted successfully" });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};

@@ -3,9 +3,11 @@ import { ProductsContext } from "../pages/_app";
 import AddProductForm from "./Products/AddProductForm";
 import UpdateProductForm from "./Products/UpdateProductForm";
 import { Product, UpdateProduct } from "@/models/products";
+import { DeleteProduct } from "../pages/api/products";
 
 const Productstable = () => {
   const products = useContext(ProductsContext);
+  const [deleteProducts, setDeleteProducts] = useState<Product[]>([]);
 
   const [updateProduct, setUpdateProduct] = useState<UpdateProduct>({
     name: "dummy",
@@ -30,6 +32,27 @@ const Productstable = () => {
     setUpdateProduct({ ...product });
     openUpdateProductForm();
   }
+
+  const handleDeleteProduct = async (productToDelete: any) => {
+    try {
+      const response = await DeleteProduct({
+        data: { _id: productToDelete._id },
+      });
+      console.log(response);
+      if (response.status === 200) {
+        setDeleteProducts(
+          deleteProducts.filter(
+            (product) => product._id !== productToDelete._id
+          )
+        );
+        console.log(`Product ${productToDelete._id} deleted successfully.`);
+      } else {
+        console.error("Failed to delete product:", response.statusText);
+      }
+    } catch (error) {
+      console.error("Error deleting product:", error);
+    }
+  };
 
   useEffect(() => {
     console.log(updateProduct);
@@ -65,6 +88,11 @@ const Productstable = () => {
                 <td>
                   <button onClick={() => handleSelectedProduct(product)}>
                     Update
+                  </button>
+                </td>
+                <td>
+                  <button onClick={() => handleDeleteProduct(product)}>
+                    Delete
                   </button>
                 </td>
               </tr>

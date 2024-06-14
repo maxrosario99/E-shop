@@ -13,6 +13,6 @@ export const AddNewProduct = (newProduct: NewProduct) => axios.post(productsUrl 
 
 export const UpdateItem = (UpdateProduct: UpdateProduct) => axios.put(productsUrl + "/UpdateProduct", UpdateProduct)
 
-
+export const DeleteProduct = (DeleteProducts: any) => axios.delete(productsUrl + "/deleteProduct", DeleteProducts)
 // export const LoginUser = (userInfo: any) => axios.post("http://localhost:3001/user/login", userInfo)
 // export const signupUser = (userInfo: any) => axios.post("http://localhost:3001/user/signup", userInfo)

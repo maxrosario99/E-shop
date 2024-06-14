@@ -1,0 +1,17 @@
+#single-product-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    justify-content: center;
+    padding: 7px;
+}
+
+.product-info-container {
+    grid-colum: 1 / 2;
+
+}
+
+#product-img-container {
+    grid-column: 1 / 2;
+    width: 100% ;
+}
